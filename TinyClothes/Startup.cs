@@ -32,13 +32,13 @@ namespace TinyClothes
         {
             services.AddControllersWithViews();
 
+            string connection = Configuration.GetConnectionString("ClothesDB");
 
             //services.AddDbContext<StoreContext>(ConfigDbContext);
-
             // same as above using Lamba notation.
             services.AddDbContext<StoreContext>
                 (
-                    options => options.UseSqlServer("con string goes here")
+                    options => options.UseSqlServer(connection)
                 );
         }
 
