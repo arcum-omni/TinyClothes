@@ -22,10 +22,16 @@ namespace TinyClothes.Data
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static Clothing Add(Clothing c, StoreContext context)
+        public static async Task<Clothing> Add(Clothing c, StoreContext context)  // added async & wrapped return type with task<>
         {
-            context.Add(c);       // Prepares insert query
-            context.SaveChanges();// Execute insert query
+            // New is GLUE, take things as parameters & Make DatabaseCode async, boost performance
+            // https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro?view=aspnetcore-3.1#create-controller-and-views
+
+            //context.Add(c);       // Prepares insert query
+            //context.SaveChanges();// Execute insert query
+
+            await context.AddAsync(c);       // Prepare insert query, Similar to above but Async
+            await context.SaveChangesAsync();// Execute insert query, Similar to above but Async
 
             return c;
         }
