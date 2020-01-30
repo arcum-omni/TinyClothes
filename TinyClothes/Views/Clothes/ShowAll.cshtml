@@ -74,3 +74,18 @@
         }
     </tbody>
 </table>
+
+<ul class="pagination">
+@* 
+    Server Side Comment, not sent to client
+    https://getbootstrap.com/docs/4.3/components/pagination/
+    Print page numbers here.
+*@
+
+    @for (int i = 1; i <= (int)ViewData["MaxPage"] ; i++)
+    {
+	    <li class="page-item">
+		    <a class="page-link" asp-action="ShowAll" asp-route-page="@i">@i</a>
+        </li>
+    }
+</ul>
