@@ -78,14 +78,25 @@
 <ul class="pagination">
 @* 
     Server Side Comment, not sent to client
-    https://getbootstrap.com/docs/4.3/components/pagination/
+    Server side code has grey background
+
     Print page numbers here.
+    https://getbootstrap.com/docs/4.3/components/pagination/
 *@
 
     @for (int i = 1; i <= (int)ViewData["MaxPage"] ; i++)
     {
-	    <li class="page-item">
-		    <a class="page-link" asp-action="ShowAll" asp-route-page="@i">@i</a>
-        </li>
-    }
+        if (i != (int)ViewData["CurrentPage"])
+		{
+	        <li class="page-item">
+		        <a class="page-link" asp-action="ShowAll" asp-route-page="@i">@i</a>
+            </li>
+		}
+		else
+		{
+            <li class="page-item active">
+                <a class="page-link" href="#">@i</a>
+            </li>
+		}
+	}
 </ul>
