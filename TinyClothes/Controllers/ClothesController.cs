@@ -23,7 +23,9 @@ namespace TinyClothes.Controllers
         {
             const int PageSize = 2; // default number of items per page
 
-            int pageNumber = page.HasValue ? page.Value : 1; // conditional statement, can use null coalescing operator (https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator) 
+            //int pageNumber = page ?? 1; // null coalescing operator ?? (https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator) 
+            int pageNumber = page.HasValue ? page.Value : 1; // conditional statement ?
+            ViewData["CurrentPage"] = pageNumber;
 
             int maxPage = await GetMaxPage(PageSize); // How many pages, always rounds up
 
