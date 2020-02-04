@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,9 +12,48 @@ namespace TinyClothes.Data
     /// </summary>
     public static class ClothingDB
     {
-        public static List<Clothing> GetAllClothing()
+        /// <summary>
+        /// The quantity/count of unique clothing items in the DB
+        /// </summary>
+        /// <returns></returns>
+        public async static Task<int> GetNumClothing(StoreContext context)
         {
-            throw new NotImplementedException();
+            // LINQ Method Syntax
+            return await context.Clothing.CountAsync();
+
+            // LINQ Query Syntax
+            //return await (from c in context.Clothing select c).CountAsync();
+        }
+
+
+        /// <summary>
+        /// Returns a specific page of clothing items by ItemId in ascending order.
+        /// </summary>
+        /// <param name="context">The DB Context</param>
+        /// <param name="pageNum">The number of the page requested</param>
+        /// <param name="pageSize">Number of clothing items per page</param>
+        public async static Task<List<Clothing>> GetClothingByPage(StoreContext context, int pageNum, int pageSize)
+        {
+            // If user wanted page 1, to avoid skipping any rows, we must offset by 1
+            const int PageOffset = 1;
+
+            // LINQ Method Syntax, trickier to modify later
+            List<Clothing> clothes = await context.Clothing
+                                        .OrderBy(c => c.ItemID)
+                                        .Skip((pageNum - PageOffset) * pageSize) // skip/take order matters, must do skip before take
+                                        .Take(pageSize)
+                                        .ToListAsync();
+
+            // LINQ Query Syntax
+            // Same functionality as method syntax above
+            // Saved for notes
+            //List<Clothing> clothes =
+            //    await (from c in context.Clothing orderby c.ItemID ascending select c)
+            //                            .Skip((pageNum - PageOffset) * pageSize) // skip/take order matters, must do skip before take
+            //                            .Take(pageSize)
+            //                            .ToListAsync();
+
+            return clothes;
         }
 
         /// <summary>
