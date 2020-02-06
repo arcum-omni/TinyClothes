@@ -5,6 +5,11 @@
 }
 
 <h1>Edit</h1>
+@if (ViewData["Message"] != null)
+{
+    @* https://getbootstrap.com/docs/4.4/components/alerts/ *@
+    <div class="alert alert-success alert-dismissible" role="alert">@ViewData["Message"]</div>
+}
 
 <h4>Clothing</h4>
 <hr />
@@ -12,11 +17,19 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ItemID" class="control-label"></label>
-                <input asp-for="ItemID" class="form-control" />
-                <span asp-validation-for="ItemID" class="text-danger"></span>
-            </div>
+            
+            <input type="hidden" asp-for="ItemID" />
+            
+            @*  auto generated code, user should not be able to edit ItemID,
+                see hidden input above
+
+                <div class="form-group">
+                    <label asp-for="ItemID" class="control-label"></label>
+                    <input asp-for="ItemID" disabled class="form-control" />
+                    <span asp-validation-for="ItemID" class="text-danger"></span>
+                </div>
+            *@
+
             <div class="form-group">
                 <label asp-for="Size" class="control-label"></label>
                 <input asp-for="Size" class="form-control" />

@@ -94,5 +94,17 @@ namespace TinyClothes.Data
             //                    where clothing.ItemID == id
             //                    select clothing).SingleOrDefaultAsync();
         }
+
+
+        public static async Task<Clothing> Edit(Clothing c, StoreContext context)
+        {
+            await context.AddAsync(c);
+            context.Entry(c).State = EntityState.Modified;
+
+            // if SaveChanges/SaveChangesAsync isn't called, db will not be updated
+            await context.SaveChangesAsync();
+
+            return c;
+        }
     }
 }
