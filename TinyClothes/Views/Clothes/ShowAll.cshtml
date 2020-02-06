@@ -6,9 +6,15 @@
 
 <h1>Clothing Inventory</h1>  @* Line 1 was: IEnumerable<TinyClothes.Models.Clothing> *@
 @if (TempData["Message"] != null)
-{ 
+{
     @* https://getbootstrap.com/docs/4.4/components/alerts/ *@
-    <div class="alert alert-success" role="alert">@TempData["Message"]</div>
+    <div class="alert alert-success alert-dismissible" role="alert">@TempData["Message"]</div>
+}
+
+@if (ViewData["Message"] != null)
+{
+    @* https://getbootstrap.com/docs/4.4/components/alerts/ *@
+    <div class="alert alert-success alert-dismissible" role="alert">@ViewData["Message"]</div>
 }
 
 <p>
@@ -67,8 +73,11 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-primary">Edit</a>
+                    @*  default auto generated code below
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    *@
                 </td>
             </tr>
         }
@@ -76,27 +85,27 @@
 </table>
 
 <ul class="pagination">
-@* 
-    Server Side Comment, not sent to client
-    Server side code has grey background
+    @*
+        Server Side Comment, not sent to client
+        Server side code has grey background
 
-    Print page numbers here.
-    https://getbootstrap.com/docs/4.3/components/pagination/
-*@
+        Print page numbers here.
+        https://getbootstrap.com/docs/4.3/components/pagination/
+    *@
 
-    @for (int i = 1; i <= (int)ViewData["MaxPage"] ; i++)
+    @for (int i = 1; i <= (int)ViewData["MaxPage"]; i++)
     {
         if (i != (int)ViewData["CurrentPage"])
-		{
-	        <li class="page-item">
-		        <a class="page-link" asp-action="ShowAll" asp-route-page="@i">@i</a>
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="ShowAll" asp-route-page="@i">@i</a>
             </li>
-		}
-		else
-		{
+        }
+        else
+        {
             <li class="page-item active">
                 <a class="page-link" href="#">@i</a>
             </li>
-		}
-	}
+        }
+    }
 </ul>

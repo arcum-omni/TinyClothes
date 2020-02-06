@@ -70,5 +70,47 @@ namespace TinyClothes.Controllers
             // return same view with validation error messages
             return View(c);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">Item ID</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            // pass primary key value, like canvas
+            Clothing c = await ClothingDB.GetClothingById(id, _context);
+
+            if (c == null) // item not in DB
+            {
+                return NotFound(); // returns HTTP 404 - Not Found Error
+
+                //return RedirectToAction("ShowAll");
+                //viewdata, item not found in db
+            }
+
+            return View(c);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="c">Clothing Object</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Edit(Clothing c)
+        {
+            if (ModelState.IsValid)
+            {
+                await ClothingDB.Edit(c, _context);
+                //return View(c);
+
+                ViewData["Message"] = $"{c.Title}, ID: {c.ItemID}, Updated Successfully"; // TempData lasts for one redirect, stays in memory
+                //return RedirectToAction("ShowAll");
+            }
+
+            return View(c);
+        }
     }
 }
