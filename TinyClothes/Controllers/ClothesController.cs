@@ -70,5 +70,16 @@ namespace TinyClothes.Controllers
             // return same view with validation error messages
             return View(c);
         }
+
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            // pass primary key value, like canvas
+            Clothing c = await ClothingDB.GetClothingById(id, _context);
+
+            return View(c);
+        }
+
+        
     }
 }
