@@ -106,8 +106,8 @@ namespace TinyClothes.Controllers
                 await ClothingDB.Edit(c, _context);
                 //return View(c);
 
-                ViewData["Message"] = $"{c.Title}, ID: {c.ItemID}, Updated Successfully"; // TempData lasts for one redirect, stays in memory
-                //return RedirectToAction("ShowAll");
+                TempData["Message"] = $"{c.Title}, ID: {c.ItemID}, Updated Successfully"; // TempData lasts for one redirect, stays in memory
+                return RedirectToAction("ShowAll");
             }
 
             return View(c);
