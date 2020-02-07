@@ -5,10 +5,15 @@
 }
 
 <h1>Edit</h1>
-@if (ViewData["Message"] != null)
+@if (TempData["Message"] != null)
 {
     @* https://getbootstrap.com/docs/4.4/components/alerts/ *@
-    <div class="alert alert-success alert-dismissible" role="alert">@ViewData["Message"]</div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 }
 
 <h4>Clothing</h4>
@@ -17,9 +22,9 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <input type="hidden" asp-for="ItemID" />
-            
+
             @*  auto generated code, user should not be able to edit ItemID,
                 see hidden input above
 
