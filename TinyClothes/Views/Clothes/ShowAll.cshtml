@@ -72,7 +72,8 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-primary">Edit</a>
+                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-primary">Edit</a> | 
+                    <a asp-action="Delete" asp-route-id="@item.ItemID" class="btn btn-danger">Delete</a>
                     @*  default auto generated code below
                         @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })

@@ -106,5 +106,18 @@ namespace TinyClothes.Data
 
             return c;
         }
+
+        public static async Task Delete(int id, StoreContext context)
+        {
+            Clothing c = await GetClothingById(id, context);
+
+            // If the product was found, delete it.
+            if (c != null)
+            {
+                await context.AddAsync(c);
+                context.Entry(c).State = EntityState.Deleted;
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }
