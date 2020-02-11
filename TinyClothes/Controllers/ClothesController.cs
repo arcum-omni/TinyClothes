@@ -106,11 +106,36 @@ namespace TinyClothes.Controllers
                 await ClothingDB.Edit(c, _context);
                 //return View(c);
 
-                TempData["Message"] = $"{c.Title}, ID: {c.ItemID}, Updated Successfully"; // TempData lasts for one redirect, stays in memory
+                TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Updated Successfully"; // TempData lasts for one redirect, stays in memory
                 return RedirectToAction("ShowAll");
             }
 
             return View(c);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Clothing c = await ClothingDB.GetClothingById(id, _context);
+
+            // Check if item does not exist
+            if (c == null)
+            {
+                return NotFound();
+            }
+
+            return View(c);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(int id)
+        {
+            Clothing c = await ClothingDB.GetClothingById(id, _context);
+
+            await ClothingDB.Delete(c, _context);
+            TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Deleted Successfully";
+            return RedirectToAction(nameof(ShowAll));
         }
     }
 }
