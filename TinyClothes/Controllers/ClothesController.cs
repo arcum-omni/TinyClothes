@@ -106,7 +106,7 @@ namespace TinyClothes.Controllers
                 await ClothingDB.Edit(c, _context);
                 //return View(c);
 
-                TempData["Message"] = $"{c.Title}, ID: {c.ItemID}, Updated Successfully"; // TempData lasts for one redirect, stays in memory
+                TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Updated Successfully"; // TempData lasts for one redirect, stays in memory
                 return RedirectToAction("ShowAll");
             }
 
@@ -131,10 +131,10 @@ namespace TinyClothes.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
+            Clothing c = await ClothingDB.GetClothingById(id, _context);
+
             await ClothingDB.Delete(id, _context);
-
-            TempData["Message"] = $"Item Deleted Successfully"; //{c.Title}, ID: {c.ItemID}, 
-
+            TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Deleted Successfully";
             return RedirectToAction(nameof(ShowAll));
         }
     }
