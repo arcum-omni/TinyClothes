@@ -107,16 +107,16 @@ namespace TinyClothes.Data
             return c;
         }
 
-        public static async Task Delete(int id, StoreContext context) // Beware of technical debt, follow MVC pattern and don't worry about it...
-        {
-            Clothing c = await GetClothingById(id, context);
-
-            // If the product was found, delete it.
-            if (c != null)
-            {
-                await Delete(c, context);
-            }
-        }
+        // 0 referene:  I commented out this method, due to redundancy.
+        //public static async Task Delete(int id, StoreContext context) // Beware of technical debt, follow MVC pattern and don't worry about it...
+        //{
+        //    Clothing c = await GetClothingById(id, context);
+        //    // If the product was found, delete it.
+        //    if (c != null)
+        //    {
+        //        await Delete(c, context);
+        //    }
+        //}
 
         public static async Task Delete(Clothing c, StoreContext context)
         {

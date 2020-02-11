@@ -133,7 +133,7 @@ namespace TinyClothes.Controllers
         {
             Clothing c = await ClothingDB.GetClothingById(id, _context);
 
-            await ClothingDB.Delete(id, _context);
+            await ClothingDB.Delete(c, _context);
             TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Deleted Successfully";
             return RedirectToAction(nameof(ShowAll));
         }
