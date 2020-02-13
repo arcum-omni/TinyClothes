@@ -15,7 +15,6 @@ TinyClothes is an eCommerce website to sell tiny clothes and fashion accessories
 - Ensure you are in Master branch, to ensure website functionality. Other branches may still be in development.
 
 **Resources:**
-- [Get Started with ASP.NET Core and Entity Framework 6](https://docs.microsoft.com/en-us/aspnet/core/data/entity-framework-6?view=aspnetcore-3.1)
 - [Tutorial: Get started with EF Core in an ASP.NET MVC web app](https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro?view=aspnetcore-3.1)
 - [Views in ASP.NET Core 3.1 MVC](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/overview?view=aspnetcore-3.1)
 - [Async and Await Video](https://channel9.msdn.com/Blogs/ASP-NET-Site-Videos/async-and-await)
