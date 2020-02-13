@@ -18,6 +18,9 @@ namespace TinyClothes.Models
         [StringLength(24)]
         public string UserName { get; set; }
 
+        /// <summary>
+        /// First & Last Name
+        /// </summary>
         [StringLength(60)]
         public string FullName { get; set; }
 
@@ -31,9 +34,11 @@ namespace TinyClothes.Models
         [StringLength(150)]
         public string Email { get; set; }
 
+        // Optional
         public string Address { get; set; }
 
         // https://en.wikipedia.org/wiki/Children%27s_Online_Privacy_Protection_Act
+        // Optional
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
     }
@@ -46,29 +51,30 @@ namespace TinyClothes.Models
         // Account ID auto generated
 
         [Required]
+        [StringLength(24)]
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
+        
+        [Required]
         [StringLength(60)]
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
         [Required]
-        [StringLength(24)]
-        [Display(Name = "Username")]
-        public string UserName { get; set; }
-
-        [Required]
+        [MinLength(6)]
         [StringLength(150)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password))] // we could hard code [Compare("Password")], but that does not have refactoring support
+        [Compare(nameof(Password))] // we could hard code [Compare("Password")], but that does not have refactoring support.
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
         [Required]
         [EmailAddress]
-        [StringLength(150)]
+        [StringLength(320)]
         public string Email { get; set; }
     }
 }
