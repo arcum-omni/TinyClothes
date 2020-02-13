@@ -47,10 +47,12 @@ namespace TinyClothes.Models
 
         [Required]
         [StringLength(60)]
+        [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
         [Required]
         [StringLength(24)]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
 
         [Required]
@@ -61,6 +63,7 @@ namespace TinyClothes.Models
         [Required]
         [DataType(DataType.Password)]
         [Compare(nameof(Password))] // we could hard code [Compare("Password")], but that does not have refactoring support
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
         [Required]
