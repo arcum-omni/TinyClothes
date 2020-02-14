@@ -28,8 +28,15 @@ namespace TinyClothes.Controllers
         {
             if (ModelState.IsValid)
             {
-                // check username & email are not taken, ie unique
-                if (!await AccountDb.IsUserNameTaken(reg.UserName, _context))
+                if (await AccountDB.IsUserNameTaken(reg.UserName, _context))// if username is taken, add error msg
+                {
+                    ModelState.AddModelError(nameof(Account.UserName), "Username is in use, create a unique username.");
+                }
+                if (await AccountDB.IsEmailTaken(reg.Email, _context))// if email is taken, add error msg
+                {
+                    ModelState.AddModelError(nameof(Account.Email), "Email is associated with another account, enter a different email address.");
+                }
+                if (!await AccountDB.IsUserNameTaken(reg.UserName, _context) && !await AccountDB.IsEmailTaken(reg.Email, _context))
                 {
                     Account acc = new Account()
                     {
@@ -39,14 +46,8 @@ namespace TinyClothes.Controllers
                         UserName = reg.UserName
                     };
 
-                    // add acc to DB
-                    await AccountDb.Register(acc, _context);
-                    return RedirectToAction("Index", "Home");
-                    // redirect to homepage
-                }
-                else // if username is taken, add error msg
-                {
-                    ModelState.AddModelError(nameof(Account.UserName), "Username is taken, choose a different username.");
+                    await AccountDB.Register(acc, _context); // Add Account to DB
+                    return RedirectToAction("Index", "Home"); // Redirect to homepage
                 }
             }
 

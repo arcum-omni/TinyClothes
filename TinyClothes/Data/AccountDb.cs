@@ -7,12 +7,19 @@ using TinyClothes.Models;
 
 namespace TinyClothes
 {
-    public static class AccountDb
+    public static class AccountDB
     {
         public static async Task<bool> IsUserNameTaken(string username, StoreContext context)
         {
             bool isTaken = await (from acc in context.Accounts where username == acc.UserName select acc).AnyAsync();
             
+            return isTaken;
+        }
+
+        public static async Task<bool> IsEmailTaken(string email, StoreContext context)
+        {
+            bool isTaken = await (from acc in context.Accounts where email == acc.Email select acc).AnyAsync();
+
             return isTaken;
         }
 
