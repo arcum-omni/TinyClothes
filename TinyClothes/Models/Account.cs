@@ -44,7 +44,7 @@ namespace TinyClothes.Models
     }
 
     /// <summary>
-    /// View Model, look up Panopto @ approx 19min for description
+    /// A model built specifically for a view, ViewModel.
     /// </summary>
     public class RegisterViewModel
     {
