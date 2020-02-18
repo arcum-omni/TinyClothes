@@ -40,6 +40,23 @@ namespace TinyClothes
                 (
                     options => options.UseSqlServer(connection)
                 );
+
+            // Where session data is going to be stored
+            services.AddDistributedMemoryCache();
+
+            // Add & configure session for state managment
+            services.AddSession(options =>
+            {
+                // Any name we choose, it's just for developers, not for the user.
+                options.Cookie.Name = ".TinyClothes.Session";
+
+                // how long session lasts
+                options.IdleTimeout = TimeSpan.FromMinutes(20.0);
+
+                // GDPR; European Privacy
+                // Session cookies always get created even if user does not acept cookie policy.
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +78,9 @@ namespace TinyClothes
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // Allows session to be accessed
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
