@@ -30,5 +30,18 @@ namespace TinyClothes
 
             return acc;
         }
+
+        /// <summary>
+        /// Return true if the username/email and password match a record in the database
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static async Task<bool> DoesUserMatch(LoginViewModel login, StoreContext context)
+        {
+            return await (from user in context.Accounts
+            where (user.Email == login.UserNameOrEmail || user.UserName == login.UserNameOrEmail) && user.Password == login.Password
+            select user).AnyAsync();
+        }
     }
 }
