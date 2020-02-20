@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,9 +31,13 @@ namespace TinyClothes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            IMvcBuilder builder = services.AddControllersWithViews();
 
             string connection = Configuration.GetConnectionString("ClothesDB");
+
+            // use interface, a way to get access to the accessor
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // this is the more technical way
+            services.AddHttpContextAccessor(); // a simple method, same as commented out code above
 
             //services.AddDbContext<StoreContext>(ConfigDbContext);
             // same as above using Lamba notation.
