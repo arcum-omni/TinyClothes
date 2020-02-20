@@ -71,7 +71,6 @@ namespace TinyClothes.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel login)
         {
@@ -79,9 +78,16 @@ namespace TinyClothes.Controllers
             {
                 Account acc = await AccountDB.DoesUserMatch(login, _context);
 
-                SessionHelper.CreateUserSession(acc.AccountID, acc.UserName, _http);
+                if(acc != null)
+                {
+                    SessionHelper.CreateUserSession(acc.AccountID, acc.UserName, _http);
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid Creditials");
+                }
             }
 
             return View(login);
