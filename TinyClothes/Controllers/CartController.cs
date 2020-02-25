@@ -36,7 +36,7 @@ namespace TinyClothes.Controllers
         /// Add a single product to the cart.
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Add(int id)
+        public async Task<IActionResult> Add(int id, string prevUrl)
         {
             // TODO: add functionality to redirect to prevUrl
 
@@ -48,7 +48,8 @@ namespace TinyClothes.Controllers
             }
 
             TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Added Successfully";
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction(prevUrl);
         }
 
         /// <summary>
