@@ -2,12 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TinyClothes.Data;
+using TinyClothes.Models;
 
 namespace TinyClothes.Controllers
 {
     public class CartController : Controller
     {
+        // To access the DB
+        private readonly StoreContext _context;
+
+        // To read cookie data
+        private readonly IHttpContextAccessor _http;
+
+        public CartController(StoreContext context, IHttpContextAccessor http)
+        {
+            _context = context;
+            _http = http;
+        }
+
         /// <summary>
         /// Display all products in cart.
         /// </summary>
@@ -21,9 +36,19 @@ namespace TinyClothes.Controllers
         /// Add a single product to the cart.
         /// </summary>
         /// <returns></returns>
-        public IActionResult Add()
+        public async Task<IActionResult> Add(int id)
         {
-            return View();
+            // TODO: add functionality to redirect to prevUrl
+
+            Clothing c = await ClothingDB.GetClothingById(id, _context);
+
+            if (c != null)
+            {
+                CartHelper.Add(c, _http);
+            }
+
+            TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Added Successfully";
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
