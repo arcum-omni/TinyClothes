@@ -57,7 +57,7 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            <span class="fas fa-shopping-cart"> 0</span>
+            <span class="fas fa-shopping-cart"> @CartHelper.GetCount(sessionInfo)</span>
             @RenderBody()
         </main>
     </div>

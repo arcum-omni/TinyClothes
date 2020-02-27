@@ -13,6 +13,8 @@ namespace TinyClothes.Models
     /// </summary>
     public class CartHelper
     {
+        private const string CartCookie = "CartCookie";
+
         /// <summary>
         /// Add an item to the shopping cart using cookies.
         /// </summary>
@@ -33,7 +35,7 @@ namespace TinyClothes.Models
 
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-3.1
             // response server writes data (create cookie) [key value pair]
-            http.HttpContext.Response.Cookies.Append("CartCookie", data);
+            http.HttpContext.Response.Cookies.Append(CartCookie, data);
         }
 
         /// <summary>
@@ -43,7 +45,16 @@ namespace TinyClothes.Models
         /// <param name="http"></param>
         public static int GetCount(IHttpContextAccessor http)
         {
-            throw new NotImplementedException();
+            string cookieData = http.HttpContext.Request.Cookies[CartCookie];
+
+            if (string.IsNullOrWhiteSpace(cookieData))
+            {
+                return 0;
+            }
+            else
+            {
+                return 1; // needs to be refactored to store multiple items in cart
+            }
         }
 
         /// <summary>
