@@ -49,7 +49,7 @@ namespace TinyClothes.Controllers
 
             TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Added Successfully";
             //return RedirectToAction("Index", "Home");
-            return RedirectToAction(prevUrl);
+            return Redirect(prevUrl);
         }
 
         /// <summary>

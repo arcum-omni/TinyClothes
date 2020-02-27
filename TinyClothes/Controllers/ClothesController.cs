@@ -108,6 +108,7 @@ namespace TinyClothes.Controllers
 
                 TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Updated Successfully"; // TempData lasts for one redirect, stays in memory
                 return RedirectToAction("ShowAll");
+                //return Redirect(prevUrl);
             }
 
             return View(c);

@@ -49,7 +49,7 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {
+		{
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.ItemID)
@@ -72,11 +72,28 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
+                @{
+					// Get curr url path, IE "/Clothes/ShowAll"
+                    string previousUrl = http.HttpContext.Request.Path;
+
+                    // Add query string, IE "?page=2" => "/Clothes/ShowAll?page=2"
+                    previousUrl += http.HttpContext.Request.QueryString.Value;
+				}
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ItemID" class="btn btn-primary">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ItemID" class="btn btn-danger">Delete</a>
+                    <a asp-action="Edit" 
+                       asp-route-id="@item.ItemID" 
+                       class="btn btn-primary">Edit</a> |
+                    <a asp-action="Delete" 
+                       asp-route-id="@item.ItemID"
+                       class="btn btn-danger">Delete</a> |
+
                     @* TODO: Keep page number in prevUrl, @http.HttpContext.Request.Path *@ 
-                    <a asp-action="Add" asp-controller="Cart" asp-route-id="@item.ItemID" class="btn btn-primary" asp-route-prevUrl="">Add To Cart</a>
+                    <a asp-action="Add" 
+                       asp-controller="Cart" 
+                       asp-route-id="@item.ItemID" 
+                       class="btn btn-primary" 
+                       asp-route-prevUrl="@previousUrl">Add To Cart</a>
+
                     @*  default auto generated code below
                         @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
