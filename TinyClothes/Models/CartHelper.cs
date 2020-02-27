@@ -22,7 +22,10 @@ namespace TinyClothes.Models
         /// <param name="http"></param>
         public static void Add(Clothing c, IHttpContextAccessor http)
         {
-            string data = JsonConvert.SerializeObject(c);
+            List<Clothing> cartItems = GetAllClothes(http);
+            cartItems.Add(c);
+
+            string data = JsonConvert.SerializeObject(cartItems);
 
             CookieOptions options = new CookieOptions
             {
@@ -30,7 +33,6 @@ namespace TinyClothes.Models
                 //Expires = DateTime.Now.AddDays(30),
                 IsEssential = true,
                 Secure = true,
-                
             };
 
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-3.1
@@ -45,26 +47,29 @@ namespace TinyClothes.Models
         /// <param name="http"></param>
         public static int GetCount(IHttpContextAccessor http)
         {
-            string cookieData = http.HttpContext.Request.Cookies[CartCookie];
+            List<Clothing> allClothes = GetAllClothes(http);
 
-            if (string.IsNullOrWhiteSpace(cookieData))
-            {
-                return 0;
-            }
-            else
-            {
-                return 1; // needs to be refactored to store multiple items in cart
-            }
+            return allClothes.Count;
         }
 
         /// <summary>
-        /// Get all items from the shopping cart.
+        /// Returns all items currently stored in the users cookie, IE shopping cart.
+        /// If no items are present, an empty list is returned.
         /// </summary>
         /// <param name="http"></param>
         /// <returns></returns>
         public static List<Clothing> GetAllClothes(IHttpContextAccessor http)
         {
-            throw new NotImplementedException();
+            // get data from the cookie
+            string data = http.HttpContext.Request.Cookies[CartCookie];
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                return new List<Clothing>();
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<List<Clothing>>(data);
+            }
         }
     }
 }
