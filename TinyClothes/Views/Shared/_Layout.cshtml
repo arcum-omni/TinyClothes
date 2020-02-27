@@ -11,6 +11,7 @@
     <title>@ViewData["Title"] - TinyClothes</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
 </head>
 <body>
     <header>
@@ -37,17 +38,17 @@
                         </li>
 
                         @if (SessionHelper.IsUserLoggedIn(sessionInfo))
-						{
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark btn btn-warning" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
-						}
+                        }
                         else
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
-						}
+                        }
 
                     </ul>
                 </div>
@@ -56,6 +57,7 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <span class="fas fa-shopping-cart"> @CartHelper.GetCount(sessionInfo)</span>
             @RenderBody()
         </main>
     </div>

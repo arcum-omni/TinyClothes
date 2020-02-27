@@ -1,50 +1,61 @@
 ﻿@{
-    ViewData["Title"] = "Welcome to Tiny Clothes";
+	ViewData["Title"] = "Welcome to Tiny Clothes";
 }
 
-	<h2>Tiny Clothes</h2>
-	<p>Tiny clothes for tiny things...</p>
+<h2>Tiny Clothes</h2>
+<p>Tiny clothes for tiny things...</p>
 
-	<div class="alert alert-primary alert-dismissible" role="alert">
-		<h4 class="alert-heading">10th Annual Going Out of Business Sale</h4>
-		<p>One day only, mark your calendar for February 30th, 2020!  Do not miss this great opportunity to purchase Tiny Clothes and fashion accessories for your fur baby. You can save 30% to 50% on most items, and up to 90% on select items.</p>
-		<hr>
-		<p class="mb-0">Winter is coming to an end! Save huge on raincoats, sweaters, and booties for next season.</p>
+<div class="alert alert-primary alert-dismissible" role="alert">
+	<h4 class="alert-heading">10th Annual Going Out of Business Sale</h4>
+	<p>One day only, mark your calendar for February 30th, 2020!  Do not miss this great opportunity to purchase Tiny Clothes and fashion accessories for your fur baby. You can save 30% to 50% on most items, and up to 90% on select items.</p>
+	<hr>
+	<p class="mb-0">Winter is coming to an end! Save huge on raincoats, sweaters, and booties for next season.</p>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
+@if (TempData["Message"] != null)
+{
+	@* https://getbootstrap.com/docs/4.4/components/alerts/ *@
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		@TempData["Message"]
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
+}
 
-    <div class="card" style="width: 18rem;">
-        <img src="~/images/tinyDog.jpg" class="card-img-top" alt="tiny dog with a tiny flip flop"/>
-		<div class="card-body">
-			<h5 class="card-title">Welcome to Tiny Clothes</h5>
-			<p class="card-text">We sell tiny clothes and fashion accessories for pets and stuffed animals.<br />These are not baby clothes!!!</p>
-        </div>
-    </div>
-	<br />
-
-	<div class="bd-example">
-		<details>
-			<summary>Return Policy:</summary>
-			<p>We do not accept returns, or issue refunds, at this time. We apologize for any inconvenience this may cause.</p>
-		</details>
-
-		<details>
-			<summary>Allergy Warning:</summary>
-			<p>We do not guarantee your fur baby will not have an allergic reaction to our clothes, or fashion accessories.</p>
-		</details>
+<div class="card" style="width: 18rem;">
+	<img src="~/images/tinyDog.jpg" class="card-img-top" alt="tiny dog with a tiny flip flop" />
+	<div class="card-body">
+		<h5 class="card-title">Welcome to Tiny Clothes</h5>
+		<p class="card-text">We sell tiny clothes and fashion accessories for pets and stuffed animals.<br />These are not baby clothes!!!</p>
 	</div>
-	<br />
+</div>
+<br />
 
-	<address>
-		<strong>Tiny Clothes Shipping Address:</strong><br />
-		17239 116th Ave. East<br />
-		Puyallup, WA 98374<br />
-		<abbr title="Mobile Cellular Telephone">Cell</abbr>: (619) 733-4389
-	</address>
+<div class="bd-example">
+	<details>
+		<summary>Return Policy:</summary>
+		<p>We do not accept returns, or issue refunds, at this time. We apologize for any inconvenience this may cause.</p>
+	</details>
 
-	<address>
-		<strong>Travis Eiler</strong><br />
-		<a href="mailto:travis.l.eiler@gmail.com">travis.l.eiler@gmail.com</a>
-	</address>
+	<details>
+		<summary>Allergy Warning:</summary>
+		<p>We do not guarantee your fur baby will not have an allergic reaction to our clothes, or fashion accessories.</p>
+	</details>
+</div>
+<br />
+
+<address>
+	<strong>Tiny Clothes Shipping Address:</strong><br />
+	17239 116th Ave. East<br />
+	Puyallup, WA 98374<br />
+	<abbr title="Mobile Cellular Telephone">Cell</abbr>: (619) 733-4389
+</address>
+
+<address>
+	<strong>Travis Eiler</strong><br />
+	<a href="mailto:travis.l.eiler@gmail.com">travis.l.eiler@gmail.com</a>
+</address>
