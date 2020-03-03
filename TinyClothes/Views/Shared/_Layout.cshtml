@@ -15,14 +15,14 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar fixed-top navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TinyClothes</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <div class="navbar-collapse collapse d-sm-inline-flex ml-auto">
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
@@ -36,6 +36,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="ShowAll">Inventory</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1 mr-auto justify-content-end">
 
                         @if (SessionHelper.IsUserLoggedIn(sessionInfo))
                         {
@@ -50,14 +52,17 @@
                             </li>
                         }
 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""><span class="fas fa-shopping-cart"> @CartHelper.GetCount(sessionInfo)</span></a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-top: 60px">
         <main role="main" class="pb-3">
-            <span class="fas fa-shopping-cart"> @CartHelper.GetCount(sessionInfo)</span>
             @RenderBody()
         </main>
     </div>
