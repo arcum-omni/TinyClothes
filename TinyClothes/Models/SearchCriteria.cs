@@ -8,7 +8,7 @@ namespace TinyClothes.Models
     public class SearchCriteria
     {
         /// <summary>
-        /// No Arg Constructor
+        /// No Arg Constructor to initialize SearchResults to avoid null ref exception
         /// </summary>
         public SearchCriteria()
         {
