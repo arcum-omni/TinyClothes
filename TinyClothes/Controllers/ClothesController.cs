@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TinyClothes.Data;
 using TinyClothes.Models;
 
@@ -144,26 +145,26 @@ namespace TinyClothes.Controllers
         {
             // Preparing query: IE select * from TABLE
             // Does not get sent to DB
-            IQueryable<Clothing> allClothes = from c in _context.Clothing 
-                                              select c;
+            IQueryable<Clothing> allClothes = (from c in _context.Clothing
+                                                     select c);
 
             // Where actual Price > minPrice from user
             if (sc.MinPrice.HasValue)
             {
-                allClothes = from c in allClothes
+                allClothes = (from c in allClothes
                              where c.Price >= sc.MinPrice
-                             select c;
+                             select c);
             }
 
             // Where actual Price < maxPrice from user
             if (sc.MaxPrice.HasValue)
             {
-                allClothes = from c in allClothes
+                allClothes = (from c in allClothes
                              where c.Price <= sc.MaxPrice
-                             select c;
+                             select c);
             }
 
-            sc.SearchResults = allClothes.ToList();
+            sc.SearchResults = await allClothes.ToListAsync();
             return View(sc);
         }
     }
