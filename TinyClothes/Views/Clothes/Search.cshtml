@@ -53,9 +53,9 @@
     <ul>
         @foreach (Clothing c in Model.SearchResults)
         {
-            <li>
-                @c.Title  : @c.Price
-            </li>
+        <li>
+            @c.Title : @c.Color : @c.Description : $@c.Price
+        </li>
         }
     </ul>
 </div>
