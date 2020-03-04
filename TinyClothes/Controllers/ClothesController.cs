@@ -146,7 +146,7 @@ namespace TinyClothes.Controllers
             // Preparing query: IE select * from TABLE
             // Does not get sent to DB
             IQueryable<Clothing> allClothes = (from c in _context.Clothing
-                                                     select c);
+                                               select c);
 
             // Where actual Price > minPrice from user
             if (sc.MinPrice.HasValue)
@@ -156,12 +156,21 @@ namespace TinyClothes.Controllers
                              select c);
             }
 
-            // Where actual Price < maxPrice from user
+            // Where item Price < maxPrice from user
             if (sc.MaxPrice.HasValue)
             {
                 allClothes = (from c in allClothes
                              where c.Price <= sc.MaxPrice
                              select c);
+            }
+
+            string v = sc.Size;
+            // Where item size == size from user
+            if (!string.IsNullOrWhiteSpace(sc.Size))
+            {
+                allClothes = (from c in allClothes
+                              where c.Size == sc.Size
+                              select c);
             }
 
             sc.SearchResults = await allClothes.ToListAsync();
