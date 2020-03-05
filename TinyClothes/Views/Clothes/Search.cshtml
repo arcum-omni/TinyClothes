@@ -49,16 +49,23 @@
     </div>
 </div>
 
-<div>
-    <ul>
-        @foreach (Clothing c in Model.SearchResults)
-        {
-        <li>
-            @c.Title : @c.Color : @c.Description : $@c.Price
-        </li>
-        }
-    </ul>
-</div>
+@if (Model.SearchResults.Count > 0)
+{
+    <div>
+        <ul>
+            @foreach (Clothing c in Model.SearchResults)
+		    {
+            <li>
+                @c.Title : @c.Color : @c.Description : $@c.Price
+            </li>
+		    }
+        </ul>
+    </div>
+}
+else
+{
+    <p>No results to display, try modifying your search criteria.</p>
+}
 
 <div>
     <a asp-action="ShowAll">Back to List</a>
