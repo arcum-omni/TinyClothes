@@ -56,7 +56,6 @@ namespace TinyClothes.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Add(Clothing c) // Asynchronous Method
         {
@@ -72,11 +71,6 @@ namespace TinyClothes.Controllers
             return View(c);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Item ID</param>
-        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -94,11 +88,6 @@ namespace TinyClothes.Controllers
             return View(c);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="c">Clothing Object</param>
-        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Edit(Clothing c)
         {
@@ -140,11 +129,6 @@ namespace TinyClothes.Controllers
             return RedirectToAction(nameof(ShowAll));
         }
 
-        /// <summary>
-        /// Needs to be moved to ClothingDB class?
-        /// </summary>
-        /// <param name="sc"></param>
-        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Search(SearchCriteria sc)
         {
