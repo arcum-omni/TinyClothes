@@ -140,56 +140,66 @@ namespace TinyClothes.Controllers
             return RedirectToAction(nameof(ShowAll));
         }
 
+        /// <summary>
+        /// Needs to be moved to clothing class?
+        /// </summary>
+        /// <param name="sc"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Search(SearchCriteria sc)
         {
-            // Preparing query: IE select * from TABLE
-            // Does not get sent to DB
-            IQueryable<Clothing> allClothes = (from c in _context.Clothing
-                                               select c);
-
-            // Where actual Price > minPrice from user
-            if (sc.MinPrice.HasValue)
+            if (ModelState.IsValid)
             {
-                allClothes = (from c in allClothes
-                             where c.Price >= sc.MinPrice
-                             select c);
+                // Preparing query: IE select * from TABLE
+                // Does not get sent to DB
+                IQueryable<Clothing> allClothes = (from c in _context.Clothing
+                                                   select c);
+
+                // Where actual Price > minPrice from user
+                if (sc.MinPrice.HasValue)
+                {
+                    allClothes = (from c in allClothes
+                                  where c.Price >= sc.MinPrice
+                                  select c);
+                }
+
+                // Where item Price < maxPrice from user
+                if (sc.MaxPrice.HasValue)
+                {
+                    allClothes = (from c in allClothes
+                                  where c.Price <= sc.MaxPrice
+                                  select c);
+                }
+
+                // Where item size == size from user
+                if (!string.IsNullOrWhiteSpace(sc.Size)) // sc.Size != null
+                {
+                    allClothes = (from c in allClothes
+                                  where c.Size.Contains(sc.Size)
+                                  select c);
+                }
+
+                // Where item title "contains" title from user
+                if (!string.IsNullOrWhiteSpace(sc.Title))
+                {
+                    allClothes = (from c in allClothes
+                                  where c.Title.Contains(sc.Title)
+                                  select c);
+                }
+
+                // Where item type == type from user
+                if (!string.IsNullOrWhiteSpace(sc.Type))
+                {
+                    allClothes = (from c in allClothes
+                                  where c.Type.Contains(sc.Type)
+                                  select c);
+                }
+
+                sc.SearchResults = await allClothes.ToListAsync();
+                return View(sc);
             }
 
-            // Where item Price < maxPrice from user
-            if (sc.MaxPrice.HasValue)
-            {
-                allClothes = (from c in allClothes
-                             where c.Price <= sc.MaxPrice
-                             select c);
-            }
-
-            // Where item size == size from user
-            if (!string.IsNullOrWhiteSpace(sc.Size)) // sc.Size != null
-            {
-                allClothes = (from c in allClothes
-                              where c.Size.Contains(sc.Size)
-                              select c);
-            }
-
-            // Where item title "contains" title from user
-            if (!string.IsNullOrWhiteSpace(sc.Title))
-            {
-                allClothes = (from c in allClothes
-                              where c.Title.Contains(sc.Title)
-                              select c);
-            }
-
-            // Where item type == type from user
-            if (!string.IsNullOrWhiteSpace(sc.Type))
-            {
-                allClothes = (from c in allClothes
-                              where c.Type.Contains(sc.Type)
-                              select c);
-            }
-
-            sc.SearchResults = await allClothes.ToListAsync();
-            return View(sc);
+            return View();
         }
     }
 }
