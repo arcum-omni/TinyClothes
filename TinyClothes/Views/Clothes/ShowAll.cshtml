@@ -18,8 +18,16 @@
 }
 
 <p>
-    <a asp-action="Add" asp-controller="Clothes">Add New Item</a> @* asp-controller="Clothes" is optional *@
+    <a class="btn btn-primary"
+       asp-action="Add" 
+       asp-controller="Clothes">Add New Item</a> @* asp-controller="Clothes" is optional *@
+     | 
+    <a class="btn btn-secondary"
+       asp-action="Search" 
+       asp-controller="Clothes">Search for Item</a>
 </p>
+
+
 <table class="table">
     <thead>
         <tr>

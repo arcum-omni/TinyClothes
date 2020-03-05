@@ -164,12 +164,27 @@ namespace TinyClothes.Controllers
                              select c);
             }
 
-            string v = sc.Size;
             // Where item size == size from user
-            if (!string.IsNullOrWhiteSpace(sc.Size))
+            if (!string.IsNullOrWhiteSpace(sc.Size)) // sc.Size != null
             {
                 allClothes = (from c in allClothes
-                              where c.Size == sc.Size
+                              where c.Size.Contains(sc.Size)
+                              select c);
+            }
+
+            // Where item title "contains" title from user
+            if (!string.IsNullOrWhiteSpace(sc.Title))
+            {
+                allClothes = (from c in allClothes
+                              where c.Title.Contains(sc.Title)
+                              select c);
+            }
+
+            // Where item type == type from user
+            if (!string.IsNullOrWhiteSpace(sc.Type))
+            {
+                allClothes = (from c in allClothes
+                              where c.Type.Contains(sc.Type)
                               select c);
             }
 
