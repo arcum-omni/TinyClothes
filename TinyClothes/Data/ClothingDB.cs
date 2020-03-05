@@ -16,7 +16,7 @@ namespace TinyClothes.Data
         /// The quantity/count of unique clothing items in the DB
         /// </summary>
         /// <returns></returns>
-        public async static Task<int> GetNumClothing(StoreContext context)
+        public static async Task<int> GetNumClothing(StoreContext context)
         {
             // LINQ Method Syntax
             return await context.Clothing.CountAsync();
@@ -32,7 +32,7 @@ namespace TinyClothes.Data
         /// <param name="context">The DB Context</param>
         /// <param name="pageNum">The number of the page requested</param>
         /// <param name="pageSize">Number of clothing items per page</param>
-        public async static Task<List<Clothing>> GetClothingByPage(StoreContext context, int pageNum, int pageSize)
+        public static async Task<List<Clothing>> GetClothingByPage(StoreContext context, int pageNum, int pageSize)
         {
             // If user wanted page 1, to avoid skipping any rows, we must offset by 1
             const int PageOffset = 1;
@@ -123,6 +123,57 @@ namespace TinyClothes.Data
             await context.AddAsync(c);
             context.Entry(c).State = EntityState.Deleted;
             await context.SaveChangesAsync();
+        }
+
+        public static async Task<SearchCriteria> BuildSearchQuery(SearchCriteria sc, StoreContext context)
+        {
+            // Preparing query: IE select * from TABLE
+            // Does not get sent to DB
+            IQueryable<Clothing> allClothes = (from c in context.Clothing
+                                               select c);
+
+            // Where actual Price > minPrice from user
+            if (sc.MinPrice.HasValue)
+            {
+                allClothes = (from c in allClothes
+                              where c.Price >= sc.MinPrice
+                              select c);
+            }
+
+            // Where item Price < maxPrice from user
+            if (sc.MaxPrice.HasValue)
+            {
+                allClothes = (from c in allClothes
+                              where c.Price <= sc.MaxPrice
+                              select c);
+            }
+
+            // Where item size == size from user
+            if (!string.IsNullOrWhiteSpace(sc.Size)) // sc.Size != null
+            {
+                allClothes = (from c in allClothes
+                              where c.Size.Contains(sc.Size)
+                              select c);
+            }
+
+            // Where item title "contains" title from user
+            if (!string.IsNullOrWhiteSpace(sc.Title))
+            {
+                allClothes = (from c in allClothes
+                              where c.Title.Contains(sc.Title)
+                              select c);
+            }
+
+            // Where item type == type from user
+            if (!string.IsNullOrWhiteSpace(sc.Type))
+            {
+                allClothes = (from c in allClothes
+                              where c.Type.Contains(sc.Type)
+                              select c);
+            }
+
+            sc.SearchResults = await allClothes.ToListAsync();
+            return sc;
         }
     }
 }
