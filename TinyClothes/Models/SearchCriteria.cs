@@ -37,5 +37,16 @@ namespace TinyClothes.Models
         public double? MaxPrice { get; set; }
 
         public List<Clothing> SearchResults { get; set; }
+
+        /// <summary>
+        /// Returns true if at lease one search criteria is provided.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsBeingSearched()
+        {
+            return (MaxPrice.HasValue || MinPrice.HasValue || 
+                    Title != null || Type != null || Size != null);
+
+        }
     }
 }

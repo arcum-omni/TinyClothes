@@ -134,8 +134,16 @@ namespace TinyClothes.Controllers
         {
             if (ModelState.IsValid)
             {
-                await ClothingDB.BuildSearchQuery(sc, _context);
-                return View(sc);
+                if (sc.IsBeingSearched())
+                {
+                    await ClothingDB.BuildSearchQuery(sc, _context);
+                    return View(sc);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Please enter search criteria");
+                    return View(sc);
+                }
             }
 
             return View();
