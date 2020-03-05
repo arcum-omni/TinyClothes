@@ -132,6 +132,7 @@ namespace TinyClothes.Controllers
         [HttpGet]
         public async Task<IActionResult> Search(SearchCriteria sc)
         {
+            // Could we use a button click event to do nothing until the button is clicked?
             if (ModelState.IsValid)
             {
                 if (sc.IsBeingSearched())
