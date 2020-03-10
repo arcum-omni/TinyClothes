@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Clothing>
+@inject IHttpContextAccessor http
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            @* Hide, show only when logged in *@
+        <td>
+            @if (SessionHelper.IsUserLoggedIn(http))
+			{
+                <a asp-action="Edit" 
+                   asp-route-id="@item.ItemID"
+                   class="btn btn-primary">Edit </a>
+                <a asp-action="Delete" 
+                   asp-route-id="@item.ItemID"
+                   class="btn btn-danger">Delete </a>
+			}
+
+            @{
+				string previousUrl = http.HttpContext.Request.Path;
+                previousUrl += http.HttpContext.Request.QueryString.Value;
+			}
+
+            <a asp-action="Add"
+               asp-controller="Cart"
+               asp-route-id="@item.ItemID"
+               class="btn btn-primary"
+               asp-route-prevUrl="@previousUrl">Add To Cart</a>
+        </td>
+        </tr>
+}
+    </tbody>
+</table>
