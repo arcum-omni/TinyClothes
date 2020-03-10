@@ -1,6 +1,5 @@
-﻿@using Microsoft.AspNetCore.Http; 
-@* using above is so I dont need to fully qualify sessionInfo below *@
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor sessionInfo
+﻿@* using above is so I dont need to fully qualify sessionInfo below *@
+@inject IHttpContextAccessor sessionInfo
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +35,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="ShowAll">Inventory</a>
                         </li>
+
                     </ul>
                     <ul class="navbar-nav flex-grow-1 mr-auto justify-content-end">
 

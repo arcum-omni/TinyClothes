@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TinyClothes.Data;
 using TinyClothes.Models;
 
@@ -55,7 +56,6 @@ namespace TinyClothes.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Add(Clothing c) // Asynchronous Method
         {
@@ -71,11 +71,6 @@ namespace TinyClothes.Controllers
             return View(c);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Item ID</param>
-        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -93,11 +88,6 @@ namespace TinyClothes.Controllers
             return View(c);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="c">Clothing Object</param>
-        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Edit(Clothing c)
         {
@@ -137,6 +127,27 @@ namespace TinyClothes.Controllers
             await ClothingDB.Delete(c, _context);
             TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Deleted Successfully";
             return RedirectToAction(nameof(ShowAll));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(SearchCriteria sc)
+        {
+            // Could we use a button click event to do nothing until the button is clicked?
+            if (ModelState.IsValid)
+            {
+                if (sc.IsBeingSearched())
+                {
+                    await ClothingDB.BuildSearchQuery(sc, _context);
+                    return View(sc);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Please enter search criteria");
+                    return View(sc);
+                }
+            }
+
+            return View();
         }
     }
 }
