@@ -33,5 +33,20 @@ namespace TinyClothes.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult CustomError(string code)
+        {
+            switch (code)
+            {
+                case "400":
+                    ViewData["ErrorMsg"] = "Hey \"Halt & Catch Fire\" the URL you tried to hack does not exist";
+                    break;
+                case "404":
+                    ViewData["ErrorMsg"] = "Page Not Found";
+                    break;
+            }
+
+            return View();
+        }
     }
 }

@@ -72,10 +72,16 @@ namespace TinyClothes.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id) // changed parameter to nullable
         {
+            if(id == null)
+            {
+                // HTTP 400 error
+                return BadRequest();
+            }
+            
             // pass primary key value, like canvas
-            Clothing c = await ClothingDB.GetClothingById(id, _context);
+            Clothing c = await ClothingDB.GetClothingById(id.Value, _context); // .Value added when parameter was changed to nullable
 
             if (c == null) // item not in DB
             {

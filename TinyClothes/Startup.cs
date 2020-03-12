@@ -87,6 +87,9 @@ namespace TinyClothes
             // Allows session to be accessed
             app.UseSession();
 
+            // My custom error page
+            app.UseStatusCodePagesWithRedirects("/Home/CustomError?code={0}");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
