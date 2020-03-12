@@ -19,11 +19,11 @@
 
 <p>
     <a class="btn btn-secondary"
-       asp-action="Search" 
+       asp-action="Search"
        asp-controller="Clothes">Search for Item</a>
-     | 
+    |
     <a class="btn btn-primary"
-       asp-action="Add" 
+       asp-action="Add"
        asp-controller="Clothes">Add New Item</a> @* asp-controller="Clothes" is optional *@
 </p>
 
@@ -54,3 +54,27 @@
         }
     }
 </ul>
+
+
+@section Scripts{
+    <script>
+		console.log("Add to cart script executing");
+		$("*[data-cart-button]").click(
+			function (event) {
+                // to stop <a> from navigating
+				event.preventDefault();
+
+                // the "Add to Cart" button that was clicked
+				var currBtn = this;
+				console.log(currBtn);
+
+				var itemID = $(currBtn).attr("data-cart-itemid");
+				console.log("You clicked " + itemID);
+
+				$.post("/Cart/AddJS", { id : itemID }).done(
+					function () {
+						alert("JS Item Added to Cart");
+    				});
+    		});
+    </script>
+}

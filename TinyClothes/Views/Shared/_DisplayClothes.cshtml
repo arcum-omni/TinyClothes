@@ -61,6 +61,7 @@
                 <a asp-action="Edit" 
                    asp-route-id="@item.ItemID"
                    class="btn btn-warning">Edit </a>
+
                 <a asp-action="Delete" 
                    asp-route-id="@item.ItemID"
                    class="btn btn-danger">Delete </a>
@@ -74,6 +75,8 @@
             <a asp-action="Add"
                asp-controller="Cart"
                asp-route-id="@item.ItemID"
+               data-cart-button
+               data-cart-itemid="@item.ItemID"
                class="btn btn-primary"
                asp-route-prevUrl="@previousUrl">Add To Cart</a>
         </td>
