@@ -36,10 +36,16 @@ namespace TinyClothes.Controllers
 
         public IActionResult CustomError(string code)
         {
-            if (code == "404")
+            switch (code)
             {
-                ViewData["ErrorMsg"] = "Not found";
+                case "400":
+                    ViewData["ErrorMsg"] = "Hey \"Halt & Catch Fire\" the URL you tried to hack does not exist";
+                    break;
+                case "404":
+                    ViewData["ErrorMsg"] = "Page Not Found";
+                    break;
             }
+
             return View();
         }
     }
