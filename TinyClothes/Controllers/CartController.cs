@@ -50,11 +50,25 @@ namespace TinyClothes.Controllers
             return Redirect(prevUrl);
         }
 
-        public async void AddJS(int id)
+        // https://prod.liveshare.vsengsaas.visualstudio.com/join?11520D56B900E64EF9597DAA2A347C8D6C89
+        public async Task<JsonResult> AddJS(int id)
         {
-            // TODO: get itemId to be added
+
+            Clothing c = await ClothingDB.GetClothingById(id, _context);
+
             // TODO: add item to cart
+            if (c == null)
+            {
+                // return item not found message (404)
+            }
+
+            CartHelper.Add(c, _http);
+
             // TODO: send success response
+            JsonResult result = new JsonResult("Item Added");
+            result.StatusCode = 200; // HTTP okay
+
+            return result;
         }
 
         /// <summary>

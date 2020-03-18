@@ -71,9 +71,14 @@
 				var itemID = $(currBtn).attr("data-cart-itemid");
 				console.log("You clicked " + itemID);
 
-				$.post("/Cart/AddJS", { id : itemID }).done(
-					function () {
-						alert("JS Item Added to Cart");
+				$.post("/Cart/AddJS", { id: itemID })
+					.done(function () {
+						var currNumItems = $(".fa-shopping-cart").text();
+						// console.log(currNumItems);
+						currNumItems++;
+
+						$(".fa-shopping-cart").text(currNumItems);
+                        //alert("JS Item Added to Cart");
     				});
     		});
     </script>
