@@ -38,8 +38,6 @@ namespace TinyClothes.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Add(int id, string prevUrl)
         {
-            // TODO: add functionality to redirect to prevUrl
-
             Clothing c = await ClothingDB.GetClothingById(id, _context);
 
             if (c != null)
@@ -50,6 +48,27 @@ namespace TinyClothes.Controllers
             TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Added Successfully";
             //return RedirectToAction("Index", "Home");
             return Redirect(prevUrl);
+        }
+
+        // https://prod.liveshare.vsengsaas.visualstudio.com/join?11520D56B900E64EF9597DAA2A347C8D6C89
+        public async Task<JsonResult> AddJS(int id)
+        {
+
+            Clothing c = await ClothingDB.GetClothingById(id, _context);
+
+            // TODO: add item to cart
+            if (c == null)
+            {
+                // return item not found message (404)
+            }
+
+            CartHelper.Add(c, _http);
+
+            // TODO: send success response
+            JsonResult result = new JsonResult("Item Added");
+            result.StatusCode = 200; // HTTP okay
+
+            return result;
         }
 
         /// <summary>
