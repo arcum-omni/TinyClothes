@@ -108,19 +108,29 @@
 						console.log(currNumItems);
 						currNumItems++;
 
-						$(".fa-shopping-cart").text(currNumItems);
+                        $(".fa-shopping-cart").text(currNumItems);
 
-						$(".modal-body").text("The item you selected was added to your shopping cart.");
-						$('#staticBackdrop').modal();
+						var header = "<h1 style='color:green;'>Success!</h1>";
+						var body = "The item you selected was added to your shopping cart."
+						displayModal(header, body);
 					})
 					.always(function () {
                         // Always run (success or failure)
 						$(currBtn).attr("href", tempLink);
 						$(currBtn).text("Add to Cart");
 					})
-					.fail(function () {
-
+                    .fail(function () {
+                        var header = "<h1 style='color:red; '>Failure!</h1>";
+                        var body = "Something went wrong! The item you selected was not added to your shopping cart. Please try again later."
+                        displayModal(header, body);
 					});
             });
+
+        // Refactored out of .done & .fail
+        function displayModal(headerText, bodyText) {
+            $(".modal-header").html(headerText);
+			$(".modal-body").text(bodyText);
+			$('#staticBackdrop').modal();
+        }
     </script>
 }
