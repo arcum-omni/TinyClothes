@@ -77,7 +77,7 @@ namespace TinyClothes.Controllers
         /// <returns></returns>
         public IActionResult CheckOut()
         {
-            return View();
+            return View(CartHelper.GetAllClothes(_http));
         }
     }
 }
