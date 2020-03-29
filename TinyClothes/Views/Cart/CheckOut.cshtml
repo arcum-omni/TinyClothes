@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ClothingCartViewModel>
+
+@{
+	ViewData["Title"] = "CheckOut";
+}
+
+<h2>Shopping Cart Summary</h2>
+@if (Model != null && Model.Count() > 0)
+{
+	<div class="row">
+		@foreach (ClothingCartViewModel item in Model)
+		{
+			@* https://getbootstrap.com/docs/4.3/components/card/ *@
+			<div class="col-md-4 col-sm-6">
+				<div class="card" style="margin: .2em;">
+					<div class="card-body">
+						<h5 class="card-title">@item.Title</h5>
+						<h6 class="card-subtitle mb-2 text-muted">@item.Price</h6>
+						<p class="card-text">This item was added @item.DateAdded.ToShortDateString()</p>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+
+	<br />
+	<br />
+	<h3>Table View</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.ItemId)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Title)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Price)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.DateAdded)
+				</th>
+				@*
+					<th></th>
+				*@
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.ItemId)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Title)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Price)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.DateAdded)
+					</td>
+					@*
+						<td>
+							@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+							@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+							@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+						</td>
+					*@
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<h3>Your cart is empty</h3>
+}

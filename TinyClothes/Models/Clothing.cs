@@ -57,4 +57,21 @@ namespace TinyClothes.Models
         [StringLength(800)]
         public string Description { get; set; }
     }
+
+    /// <summary>
+    /// Clothing that is in the cart.
+    /// This is not going into the database.
+    /// It is only displaying information.
+    /// </summary>
+    public class ClothingCartViewModel
+    {
+        // Id, title, & price
+        public int ItemId { get; set; }
+
+        public double Price { get; set; }
+
+        public DateTime DateAdded { get; set; }
+
+        public string Title { get; set; }
+    }
 }

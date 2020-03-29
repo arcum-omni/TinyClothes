@@ -20,9 +20,9 @@ namespace TinyClothes.Models
         /// </summary>
         /// <param name="c"></param>
         /// <param name="http"></param>
-        public static void Add(Clothing c, IHttpContextAccessor http)
+        public static void Add(ClothingCartViewModel c, IHttpContextAccessor http)
         {
-            List<Clothing> cartItems = GetAllClothes(http);
+            List<ClothingCartViewModel> cartItems = GetAllClothes(http);
             cartItems.Add(c);
 
             string data = JsonConvert.SerializeObject(cartItems);
@@ -47,7 +47,7 @@ namespace TinyClothes.Models
         /// <param name="http"></param>
         public static int GetCount(IHttpContextAccessor http)
         {
-            List<Clothing> allClothes = GetAllClothes(http);
+            List<ClothingCartViewModel> allClothes = GetAllClothes(http);
 
             return allClothes.Count;
         }
@@ -58,17 +58,17 @@ namespace TinyClothes.Models
         /// </summary>
         /// <param name="http"></param>
         /// <returns></returns>
-        public static List<Clothing> GetAllClothes(IHttpContextAccessor http)
+        public static List<ClothingCartViewModel> GetAllClothes(IHttpContextAccessor http)
         {
             // get data from the cookie
             string data = http.HttpContext.Request.Cookies[CartCookie];
             if (string.IsNullOrWhiteSpace(data))
             {
-                return new List<Clothing>();
+                return new List<ClothingCartViewModel>();
             }
             else
             {
-                return JsonConvert.DeserializeObject<List<Clothing>>(data);
+                return JsonConvert.DeserializeObject<List<ClothingCartViewModel>>(data);
             }
         }
     }
