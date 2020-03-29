@@ -1,7 +1,7 @@
 ![.NET Core](https://github.com/arcum-omni/TinyClothes/workflows/.NET%20Core/badge.svg)
 
 # TinyClothes
-[CPTC](http://cptc.edu/), [CPW213](https://cptc.instructure.com/courses/1851341), Winter 2020, eCommerce Project using ASP.NET Core MVC
+[CPTC](http://cptc.edu/), [CPW213](https://cptc.instructure.com/courses/1851341), Winter 2020, eCommerce Project using ASP.NET Core MVC.  This project covered CRUD functionality using SQL Server & EF Core, managing session states, learned some Dependency Injection, and the MVC pattern.
 
 TinyClothes is an eCommerce website to sell tiny clothes and fashion accessories for pets and stuffed animals. These are not baby clothes!
 
