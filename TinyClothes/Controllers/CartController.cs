@@ -42,7 +42,14 @@ namespace TinyClothes.Controllers
 
             if (c != null)
             {
-                CartHelper.Add(c, _http);
+                var item = new ClothingCartViewModel()
+                {
+                    ItemId = c.ItemID,
+                    Title = c.Title,
+                    Price = c.Price,
+                    DateAdded = DateTime.Now
+                };
+                CartHelper.Add(item, _http);
             }
 
             TempData["Message"] = $"{c.Title}, ID#: {c.ItemID}, Added Successfully";
@@ -60,9 +67,20 @@ namespace TinyClothes.Controllers
             if (c == null)
             {
                 // return item not found message (404)
+                JsonResult notFound = new JsonResult("Not Found");
+                notFound.StatusCode = 404;
+                return notFound;
             }
 
-            CartHelper.Add(c, _http);
+            var item = new ClothingCartViewModel()
+            {
+                ItemId = c.ItemID,
+                Title = c.Title,
+                Price = c.Price,
+                DateAdded = DateTime.Now
+            };
+
+            CartHelper.Add(item, _http);
 
             // TODO: send success response
             JsonResult result = new JsonResult("Item Added");
